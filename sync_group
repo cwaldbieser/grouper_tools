@@ -1,0 +1,33 @@
+#! /bin/bash
+
+# Usage
+function usage
+{
+    echo "Usage: $0 GROUP_NAME" >&2
+}
+
+# Computed variables
+THISDIR="$( cd $(dirname $0); pwd)"
+SCRIPT="$THISDIR/$(basename $0)"
+GET_MEMBERS="$THISDIR/get_members"
+MEMBSYNC_TO_JSON="$THISDIR/membsync_to_json.py"
+# User configurable variables.
+TXQPRODUCER="/var/opt/txamqp_tools/txqproducer"
+GROUPER_EXCHANGE=grouper_exchange
+ROUTE_KEY=kiki.memb_sync
+EXCHANGE_ENDPOINT='tls:host=grouper.dev.lafayette.edu:port=5671:trustRoots=/etc/grouper/ssl/ca:endpoint=tcp\:localhost\:5671'
+EXCHANGE_USER=guest
+EXCHANGE_PASSWD_FILE=/etc/grouper_tools/grouper_exchange.passwd
+
+# Command line processing
+GROUP_NAME="$1"
+if [ -z "$GROUP_NAME" ]; then
+    echo "Must provide a Grouper group name as an argument." >&2
+    exit 1
+fi
+
+# The command pipeline.
+"$GET_MEMBERS" "$GROUP_NAME" | "$MEMBSYNC_TO_JSON" "$GROUP_NAME" | \
+    "$TXQPRODUCER" "$GROUPER_EXCHANGE" "$ROUTE_KEY" - -e "$EXCHANGE_ENDPOINT" -u "$EXCHANGE_USER" --passwd-file "$EXCHANGE_PASSWD_FILE"
+
+

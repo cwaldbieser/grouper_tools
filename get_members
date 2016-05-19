@@ -1,0 +1,12 @@
+#! /bin/bash
+
+# Computed variables.
+THISDIR="$( cd $(dirname $0); pwd)"
+SCRIPT="$THISDIR/$(basename $0)"
+# User configurable variables.
+export GROUPER_HOME=/opt/internet2/grouper/grouper.apiBinary
+GSH_JYTHON="$GROUPER_HOME/bin/gsh.jython"
+
+# Run script via `gsh.jython`
+("$GSH_JYTHON" "$THISDIR/get_members.py" $@ 3>&2 2>&1 1>&3) 2>/dev/null
+

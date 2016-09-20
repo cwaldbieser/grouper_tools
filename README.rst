@@ -9,6 +9,10 @@ with the Lafayette College Grouper provisioning architecture.
 The shell scripts included in this collection have user configurable
 variables for paths to external tools, configuration files, etc.
 
+""""""""""
+Core Tools
+""""""""""
+
 -----------
 Get Members
 -----------
@@ -35,4 +39,17 @@ Example::
     ./sync_group 'test:orkz:ldap_exports:nobz'
 
 Depends on the 'txamqp_tools` scripts.
+
+
+""""""""""""""""""""
+Full Synchronization
+""""""""""""""""""""
+
+Scripts that use the core tools to perform a full synchronization for a batch
+of groups.
+
+Example::
+
+    $ ./full_synchronize.sh ./groups.txt
+
 

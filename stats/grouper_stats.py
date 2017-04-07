@@ -75,7 +75,7 @@ def main():
     print("Basis Groups: {0}".format(count_groups(session, "basis")))
     print("Loader Jobs: {0}".format(count_loader_jobs(session, "")))
     print("Students: {0}".format(count_group_members(session, "ref:student:students")))
-    print("Employees: {0}".format(count_groups_members(session, "ref:employee")))
+    print("Employees: {0}".format(count_group_members(session, "ref:employee:employee")))
     print("Alumni w/ degree: {0}".format(count_group_members(session, "ref:alumni:alum_w_degree")))
     print("Alumni no degree: {0}".format(count_group_members(session, "ref:alumni:alum_no_degree")))
     print("Employee Services: {0}".format(count_group_members(session, "bundle:employee_services:employee_services")))

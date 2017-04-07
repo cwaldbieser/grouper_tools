@@ -51,6 +51,18 @@ def count_group_members(session, group_name):
     """
     return len(list(getPersonMembers(getGroup(session, group_name))))
 
+def count_loader_jobs(session, parent_stem_name):
+    """
+    Count the number of groups with Grouper Loader jobs attached that
+    are located under `parent_stem_name`.
+    """
+    count = 0
+    for stem, child_stems, groups in walk_stems(session, parent_stem_name):
+        for group in groups:
+            if "grouperLoaderType" in group.attributes:
+                count += 1
+    return count
+
 def main():
     """
     Generate Grouper deployment statistics.
@@ -61,6 +73,7 @@ def main():
     print("Bundles: {0}".format(count_child_stems(session, "bundle")))
     print("Reference Groups: {0}".format(count_groups(session, "ref")))
     print("Basis Groups: {0}".format(count_groups(session, "basis")))
+    print("Loader Jobs: {0}".format(count_loader_jobs(session, "")))
     print("Students: {0}".format(count_group_members(session, "ref:student:students")))
     print("Employees: {0}".format(count_groups_members(session, "ref:employee")))
     print("Alumni w/ degree: {0}".format(count_group_members(session, "ref:alumni:alum_w_degree")))

@@ -13,4 +13,3 @@ fi
 while read group ; do
     "$SYNC" "$group"
 done
-

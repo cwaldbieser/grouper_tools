@@ -1,5 +1,4 @@
 
-
 from __future__ import print_function
 import json
 import sys
@@ -23,9 +22,16 @@ def main():
             x = getGroups(session, k)
         except:
             continue
+        if k.endswith(":"):
+            is_stem = True
+        else:
+            is_stem = False    
         for g in x:
-            print(g.name)
+            name = g.name
+            if not is_stem:
+                if k != name:
+                    continue
+            print(name)
 
 if __name__ == "__main__":
     main()
-

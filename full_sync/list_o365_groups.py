@@ -6,10 +6,10 @@ import json
 
 def main():
     scp = ConfigParser.SafeConfigParser()
-    scp.read(["/etc/grouper/provisioners/o365/o365_subjects.cfg"])
+    scp.read(["/etc/txamqpprovisioners/provisioners/o365/o365_subjects.cfg"])
     provision_group = scp.get("PROVISIONER", "provision_group") 
     print(provision_group)
-    with open("/etc/grouper/provisioners/o365/o365_group_map.json", "r") as f:
+    with open("/etc/txamqpprovisioners/provisioners/o365/o365_group_map.json", "r") as f:
         doc = json.load(f)
     for group in doc:
         print(group)

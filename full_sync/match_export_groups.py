@@ -6,7 +6,7 @@ from jython_grouper import *
 
 def main():
     """
-    Read the `/etc/grouper/groupmap.json` file and produce a list of 
+    Read the `/etc/txamqpprovisioners/groupmap.json` file and produce a list of 
     Grouper groups that match the patterns.
     """
     # Swap STDERR and STDOUT
@@ -15,7 +15,7 @@ def main():
     sys.stdout = stderr
     sys.stderr = stdout
     session = getRootSession()
-    with open("/etc/grouper/groupmap.json", "rb") as f:
+    with open("/etc/txamqpprovisioners/ldap/groupmap.json", "rb") as f:
         config = json.load(f)
     for k in config.keys():
         try:

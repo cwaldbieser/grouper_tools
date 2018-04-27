@@ -7,8 +7,8 @@ import stem_walk
 
 def main():
     """
-    Read the `/etc/grouper/groupmap.json` file and produce a list of 
-    Grouper groups that match the patterns.
+    Walk the "app" tree and search for groups in the "exports" folders.
+    Print the name of those groups.
     """
     # Swap STDERR and STDOUT
     stdout = sys.stdout

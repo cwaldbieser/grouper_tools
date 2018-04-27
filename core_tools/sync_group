@@ -15,7 +15,7 @@ MEMBSYNC_TO_JSON="$THISDIR/membsync_to_json.py"
 TXQPRODUCER="/var/opt/txamqp_tools/txqproducer"
 GROUPER_EXCHANGE=grouper_exchange
 ROUTE_KEY=kiki.memb_sync
-EXCHANGE_ENDPOINT='tls:host=grouper.dev.lafayette.edu:port=5671:trustRoots=/etc/grouper/ssl/ca:endpoint=tcp\:localhost\:5671'
+EXCHANGE_ENDPOINT='tls:host=grouper.dev.lafayette.edu:port=5671:trustRoots=/etc/txamqpprovisioner/ssl/ca:endpoint=tcp\:localhost\:5671'
 EXCHANGE_USER=guest
 EXCHANGE_PASSWD_FILE=/etc/grouper_tools/grouper_exchange.passwd
 

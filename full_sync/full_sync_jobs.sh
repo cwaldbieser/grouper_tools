@@ -14,19 +14,19 @@ ALL_EXPORTS=$(mktemp)
 
 # Mailman
 echo "["$(tstamp)"] Starting mailman group sync ..." >> "$LOG"
-"$PYTHON" "$FILTER_SSH_GROUPS" /etc/grouper/provisioners/maillists/groupmap.json "$ALL_EXPORTS" | \
+"$PYTHON" "$FILTER_SSH_GROUPS" /etc/txamqpprovisioners/provisioners/maillists/groupmap.json "$ALL_EXPORTS" | \
     "$SYNCHRONIZE" > /dev/null 2>> "$LOG"
 echo >> "$LOG"
 
 # Share-o-matic
 echo "["$(tstamp)"] Starting share-o-matic group sync ..." >> "$LOG"
-"$PYTHON" "$FILTER_SSH_GROUPS" /etc/grouper/provisioners/shareomatic/volume_its/groupmap.json "$ALL_EXPORTS" | \
+"$PYTHON" "$FILTER_SSH_GROUPS" /etc/txamqpprovisioners/provisioners/shareomatic/volume_its/groupmap.json "$ALL_EXPORTS" | \
     "$SYNCHRONIZE" > /dev/null 2>> "$LOG"
 echo >> "$LOG"
 
 # Zimbra distribution lists.
 echo "["$(tstamp)"] Starting Zimbra distribution list group sync ..." >> "$LOG"
-"$PYTHON" "$FILTER_SSH_GROUPS" /etc/grouper/provisioners/zimbra/groupmap.json "$ALL_EXPORTS" | \
+"$PYTHON" "$FILTER_SSH_GROUPS" /etc/txamqpprovisioners/provisioners/zimbra/groupmap.json "$ALL_EXPORTS" | \
     "$SYNCHRONIZE" > /dev/null 2>> "$LOG"
 echo >> "$LOG"
 

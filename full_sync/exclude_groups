@@ -1,0 +1,8 @@
+#! /bin/bash
+
+# Set variables
+THISDIR="$( cd $(dirname $0); pwd)"
+SCRIPT="$THISDIR/$(basename $0)"
+PATTERN_LIST="$THISDIR/exclude-group-patterns.txt"
+
+grep -v -f "$PATTERN_LIST"

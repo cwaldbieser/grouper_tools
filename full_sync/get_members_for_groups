@@ -1,0 +1,9 @@
+#! /bin/bash
+
+# Set variables
+THISDIR="$( cd $(dirname $0); pwd)"
+SCRIPT="$THISDIR/$(basename $0)"
+PYTHON=/var/opt/txamqpprovisioner/pyenv/bin/python
+
+"$PYTHON" "$SCRIPT.py" "$@"
+

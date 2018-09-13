@@ -64,7 +64,7 @@ def create_engr_ref_groups(session, args):
     if not args.no_engu:
         tags.append('engu')
     for major in tags:
-        stem = "ref:student:majors:major_{}".format(major)
+        stem = "ref:engineering:basis:{}_major_minor".format(major)
         student_major_g = getGroup(session, stem)
         stem = "{}:{}".format(stem_prefix, major.upper())
         ext = "{}_{}".format(major, year)

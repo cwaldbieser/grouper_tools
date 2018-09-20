@@ -11,16 +11,27 @@ from jython_grouper import (
 )
 from edu.internet2.middleware.grouper.misc import CompositeType
 from edu.internet2.middleware.grouper import exception as gexcept
+from edu.internet2.middleware.grouper.attr import AttributeDefType, AttributeDefSave, AttributeDefValueType, AttributeDefNameSave
 
 def main(args):
+    session = getRootSession()
+    attributeDef = AttributeDefSave(session).assignName(
+        "etc:attribute:app:ems:ems_group_type").assignCreateParentStemsIfNotExist(
+            True).assignToGroup(True).assignAttributeDefType(
+                AttributeDefType.attr).assignMultiAssignable(
+                    False).assignMultiValued(False).assignValueType(
+                        AttributeDefValueType.string).save()
+    attributeDefName = AttributeDefNameSave(session, attributeDef).assignName(
+        "etc:attribute:app:ems:ems_group_type").assignCreateParentStemsIfNotExist(True).save()
     reset_policies = args.reset_policies
     use_display_extension = args.use_display_extension
     org_type = 'dept'
+    ems_group_type = 'employee'
     club = args.club
     if club:
         org_type = 'club'
+        ems_group_type = 'student'
     list_pols = args.list_policies
-    session = getRootSession()
     emp_ref = getGroup(session, "ref:employee:employee")
     disabled_ref = getGroup(session, "ref:disabled")
     basis_stem = 'app:ems:hr_tk_policies:basis'
@@ -75,6 +86,9 @@ def main(args):
             print("Updating description for '{}:{}' to '{}' ...".format(exports_stem, nodept_ext, display_ext))
             policy.description = display_ext
             policy.store()
+        print("Updating ems_group_type custom attribute for '{}:{}' to '{}' ...".format(exports_stem, nodept_ext, ems_group_type))
+        policy.getAttributeValueDelegate().assignValueString(attributeDefName.getName(), ems_group_type)
+        policy.store()
         if list_pols:
             print(policy.name)
 

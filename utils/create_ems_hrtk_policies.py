@@ -21,8 +21,11 @@ def main(args):
                 AttributeDefType.attr).assignMultiAssignable(
                     False).assignMultiValued(False).assignValueType(
                         AttributeDefValueType.string).save()
-    attributeDefName = AttributeDefNameSave(session, attributeDef).assignName(
+    ems_group_type_attr_def_name = AttributeDefNameSave(session, attributeDef).assignName(
         "etc:attribute:app:ems:ems_group_type").assignCreateParentStemsIfNotExist(True).save()
+    ems_group_name_attr_def_name = AttributeDefNameSave(session, attributeDef).assignName(
+        "etc:attribute:app:ems:ems_group_name").assignCreateParentStemsIfNotExist(True).save()
+    desc_to_group_name = args.desc_to_group_name
     reset_policies = args.reset_policies
     use_display_extension = args.use_display_extension
     org_type = 'dept'
@@ -86,8 +89,12 @@ def main(args):
             print("Updating description for '{}:{}' to '{}' ...".format(exports_stem, nodept_ext, display_ext))
             policy.description = display_ext
             policy.store()
+        if desc_to_group_name:
+            desc = policy.description
+            print("Copying policy description to `ems_group_name` custom attribute for '{}:{}' -> '{}' ...".format(exports_stem, nodept_ext, desc))
+            policy.getAttributeValueDelegate().assignValueString(ems_group_name_attr_def_name.getName(), desc)
         print("Updating ems_group_type custom attribute for '{}:{}' to '{}' ...".format(exports_stem, nodept_ext, ems_group_type))
-        policy.getAttributeValueDelegate().assignValueString(attributeDefName.getName(), ems_group_type)
+        policy.getAttributeValueDelegate().assignValueString(ems_group_type_attr_def_name.getName(), ems_group_type)
         policy.store()
         if list_pols:
             print(policy.name)
@@ -127,6 +134,10 @@ if __name__ == "__main__":
         "--use-display-extension",
         action='store_true',
         help='Populate the policy description with the reference group display extension.')
+    parser.add_argument(
+        "--desc-to-group-name",
+        action='store_true',
+        help="Copy the policy description to the custom attribute 'ems_group_name'.")
     parser.add_argument(
         "-r",
         "--reset-policies",
